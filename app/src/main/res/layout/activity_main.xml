@@ -32,12 +32,14 @@
         <TextView
             android:id="@+id/seguimiento"
             android:layout_width="match_parent"
-            android:layout_height="246dp" />
+            android:layout_height="246dp"
+            android:textSize="22dp"/>
 
         <Button
             android:id="@+id/ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="openSecondActivity"
             android:text="Ranking" />
     </LinearLayout>
 
