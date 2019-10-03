@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Adivina</string>
+    <string name="aceptar">Done</string>
+    <string name="cancelar">Cancel</string>
 </resources>

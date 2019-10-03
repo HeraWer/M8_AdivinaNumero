@@ -1,8 +1,6 @@
 package com.example.search_number;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    int contador = 0;
+    Player p = new Player();
+    String resultado = new String();
+    ArrayList<Player> listaP = new ArrayList<Player>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (Integer.parseInt(intento) > nRandom) {
                     pista = "Intenta un numero mas pequeño";
-                    contador++;
-                    tv.setText("Numero de intentos: " + contador);
+                    p.contadorIntentos++;
+                    tv.setText("Numero de intentos: " + p.contadorIntentos);
                 } else if (Integer.parseInt(intento) < nRandom) {
                     pista = "Intenta un numero mas grande";
-                    contador++;
-                    tv.setText("Numero de intentos: " + contador);
+                    p.contadorIntentos++;;
+                    tv.setText("Numero de intentos: " + p.contadorIntentos);
                 } else if (Integer.parseInt(intento) == nRandom) {
-                    contador++;
+                    p.contadorIntentos++;
+                    openDialog();
                 }
                 Toast.makeText(MainActivity.this, pista, Toast.LENGTH_LONG).show();
                 introTexto.getText().clear();
@@ -58,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSecondActivity(View view) {
         Intent in = new Intent(MainActivity.this, SecondActivity.class);
-        in.putExtra("Manolo", contador);
+        in.putExtra("Manolo", p.contadorIntentos);
+        in.putExtra("N", p.jPlayer);
         startActivity(in);
+    }
+
+    public void openDialog(){
+        Dialogo d = new Dialogo();
+        d.show(getSupportFragmentManager(), "Para el raking");
     }
 
 

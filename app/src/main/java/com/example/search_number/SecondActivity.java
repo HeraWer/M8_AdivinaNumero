@@ -1,14 +1,10 @@
 package com.example.search_number;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Arrays;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -17,8 +13,12 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        MainActivity mA = new MainActivity();
         final TextView textViewRecords = findViewById(R.id.textViewRecords);
-        Button guardar = findViewById(R.id.guardar);
+       textViewRecords.setText("");
+       for(Player p : mA.listaP){
+           textViewRecords.setText(textViewRecords.getText() + p.toString());
+       }
 
     }
 }
