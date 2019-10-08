@@ -41,6 +41,14 @@
             android:layout_height="wrap_content"
             android:onClick="openSecondActivity"
             android:text="Ranking" />
+
+        <Button
+            android:id="@+id/vJugar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="restart"
+            android:text="Play again" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
