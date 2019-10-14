@@ -2,6 +2,7 @@ package com.example.search_number;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,13 +19,14 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Player p = new Player();
-    private Dialogo d = new Dialogo();
+    Player p = new Player();
     private int nRandom = generarRandom(); // VARIABLE PARA GENERAR UN RANDOM
     private TextView tv; // VARIABLE PARA CREAR UN TEXTVIEW DONDE SE VERAN LOS INTENTOS
     private EditText introTexto; // VARIABLE PARA LEER LO QUE INTRODUCIMOS EN EL EDITTEXT DE INTENTOS
-    private ArrayList<Player> listP = new ArrayList<>();
+    private String nombreDialogo; // VARIABLE QUE RECOJO DEL DIALOGO
+    private int contIntentos = 0; // VARIABLE PARA CONTAR INTENTOS
 
+    // ON CREATE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,25 +46,24 @@ public class MainActivity extends AppCompatActivity {
                 } else { // AQUI HAGO TODAS LAS COMPROBACIONES A LA VEZ QUE EDITO LAS VARIABLES DE LA CLASE PLAYER
                     if (Integer.parseInt(intento) > nRandom) {
                         pista = "Intenta un numero mas pequeño";
-                        p.setContadorIntentos(p.getContadorIntentos() + 1); // SUMAR CONTADOR Y GUARDAR EN LA VARIABLE
+                        contIntentos = contIntentos + 1;
+                        p.setContadorIntentos(contIntentos); // SUMAR CONTADOR Y GUARDAR EN LA VARIABLE
                         //System.out.println(p.getContadorIntentos()); // COMPRUEBO QUE SE GUARDA LA VARIABLE
-                        tv.setText("Numero de intentos: " + p.getContadorIntentos()); // MOSTRAR EN EL TV EL NUMERO DE INTENTO QUE LLEVAMOS LEYENDO LA VARIABLE
+                        tv.setText("Numero de intentos: " + contIntentos); // MOSTRAR EN EL TV EL NUMERO DE INTENTO QUE LLEVAMOS LEYENDO LA VARIABLE
                         Toast.makeText(MainActivity.this, pista, Toast.LENGTH_LONG).show();
                     } else if (Integer.parseInt(intento) < nRandom) {
                         pista = "Intenta un numero mas grande";
-                        p.setContadorIntentos(p.getContadorIntentos() + 1);
-                        tv.setText("Numero de intentos: " + p.getContadorIntentos());
+                        contIntentos = contIntentos + 1;
+                        p.setContadorIntentos(contIntentos);
+                        tv.setText("Numero de intentos: " + contIntentos);
                         Toast.makeText(MainActivity.this, pista, Toast.LENGTH_LONG).show();
                     } else if (Integer.parseInt(intento) == nRandom) {
-                        p.setContadorIntentos(p.getContadorIntentos() + 1);
+                        contIntentos = contIntentos + 1;
+                        p.setContadorIntentos(contIntentos);
+                        tv.setText("Numero de intentos: " + contIntentos);
                         Toast.makeText(MainActivity.this, "Has encontrado el numero", Toast.LENGTH_SHORT).show();
-                        openDialog();
 
-                        /*p.setjPlayer(d.getNom());
-                        listP.add(new Player(p.getjPlayer(), p.getContadorIntentos()));
-                        for (Object obj : listP) {
-                            System.out.println(obj.toString());
-                        }*/
+                        openDialog();
                     }
                     introTexto.getText().clear();
                 }
@@ -75,21 +76,39 @@ public class MainActivity extends AppCompatActivity {
         Intent in = new Intent(MainActivity.this, SecondActivity.class);
         startActivity(in);
     }
+
     // PARA ABRIR EL DIALOGO
     public void openDialog() {
-        Dialogo d = new Dialogo();
-        d.show(getSupportFragmentManager(), "Para el raking");
-        /*restart();*/ // SI PONGO LA LLAMADA AL METODO Y QUITO EL VIEW VIEW SE PUEDE RESETEAR DESDE EL DIALOGO SIN NECESIDAD DE TENER UN BOTON VOLVER A EMPEZAR
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialogo);
+        dialog.setTitle("Name user");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Button buttonRegistro = dialog.findViewById(R.id.botonDialogoD);
+        buttonRegistro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                EditText inputDialogo = dialog.findViewById(R.id.record);
+                nombreDialogo = inputDialogo.getText().toString();
+                p.setContadorIntentos(contIntentos);
+                p.setjPlayer(nombreDialogo);
+                SecondActivity.listP.add(new Player(nombreDialogo, contIntentos));
+                dialog.dismiss();
+            }
+        });
     }
+
     // CREO UN METODO RESTART PARA PODER RESETEAR EL NUMERO NRANDOM
-    public void restart(View view){
-        p.setContadorIntentos(0);
+    public void restart(View view) {
+        contIntentos = 0;
         tv.setText("");
         nRandom = generarRandom();
     }
 
     //METODO PARA GENERAR UN NUMERO RANDOM
-    public static int generarRandom(){
+    public static int generarRandom() {
         int numAleatorio = (int) (Math.random() * 100 + 1);
         return numAleatorio;
     }
