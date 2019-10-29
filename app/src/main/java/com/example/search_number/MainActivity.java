@@ -3,6 +3,7 @@ package com.example.search_number;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 nombreDialogo = inputDialogo.getText().toString();
                 p.setContadorIntentos(contIntentos);
                 p.setjPlayer(nombreDialogo);
-                SecondActivity.listP.add(new Player(nombreDialogo, contIntentos));
+                persistenciaDatos(p.getjPlayer(), p.getContadorIntentos());
                 dialog.dismiss();
             }
         });
@@ -113,4 +124,16 @@ public class MainActivity extends AppCompatActivity {
         return numAleatorio;
     }
 
+    // PASANDO NOMBRE Y INTENTOS A UN ARCHIVO DE TEXTO PLANO
+    public void persistenciaDatos(String dNombre, int dIntentos) {
+
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput("ranking.txt", Context.MODE_APPEND));
+            osw.write(dNombre + "," + dIntentos);
+            osw.append("\r\n");
+            osw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
