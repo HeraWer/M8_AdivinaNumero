@@ -39,7 +39,7 @@ public class Player implements Comparable<Player>{
     //METODO PARA IMPRIMIR LA LISTA Y QUE EL CONTENIDO SEA VISIBLE
     @Override
     public String toString() {
-        return  jPlayer + "                                                     " + contadorIntentos;
+        return  jPlayer + "                                                      " + contadorIntentos;
     }
 
     // METODO PARA ORDENAR LA LISTA DE OBJETOS POR CONTADORINTENTOS ( EL COLLECTIONS )
