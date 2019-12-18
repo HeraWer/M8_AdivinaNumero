@@ -1,11 +1,14 @@
 package com.example.search_number;
 
 
+import android.net.Uri;
 
 public class Player implements Comparable<Player>{
 
     private String jPlayer = new String();
     private int contadorIntentos = 0;
+    private Uri fotoRanking;
+
 
 
     // SETTERS Y GETTERS
@@ -26,20 +29,29 @@ public class Player implements Comparable<Player>{
         this.jPlayer = jPlayer;
     }
 
+    public Uri getFotoRanking() {
+        return fotoRanking;
+    }
+
+    public void setFotoRanking(Uri fotoRanking) {
+        this.fotoRanking = fotoRanking;
+    }
+
     public Player(){
 
     }
 
     // CONSTRUCTOR
-    public Player(String jPlayer, int contadorIntentos) {
+    public Player(String jPlayer, int contadorIntentos, Uri fotoRaking) {
         this.jPlayer = jPlayer;
         this.contadorIntentos = contadorIntentos;
+        this.fotoRanking = fotoRaking;
     }
 
     //METODO PARA IMPRIMIR LA LISTA Y QUE EL CONTENIDO SEA VISIBLE
     @Override
     public String toString() {
-        return  jPlayer + "                                                      " + contadorIntentos;
+        return (jPlayer + "                    " + contadorIntentos );
     }
 
     // METODO PARA ORDENAR LA LISTA DE OBJETOS POR CONTADORINTENTOS ( EL COLLECTIONS )

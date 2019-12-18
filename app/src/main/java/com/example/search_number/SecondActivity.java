@@ -1,6 +1,8 @@
 package com.example.search_number;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,7 +33,7 @@ public class SecondActivity extends AppCompatActivity {
             String line;
             while((line = br.readLine()) != null){
                 String[] palabra = line.split(",");
-                listP.add(new Player(palabra[0], Integer.parseInt(palabra[1])));
+                listP.add(new Player(palabra[0], Integer.parseInt(palabra[1]), Uri.parse(palabra[2])));
             }
 
         }catch (IOException e){
@@ -42,8 +44,8 @@ public class SecondActivity extends AppCompatActivity {
     public void showData(){
         Collections.sort(listP);
         ListView lv = findViewById(R.id.listRecord);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, listP);
-        lv.setAdapter(adapter);
+        ListViewAdapter lva = new ListViewAdapter(this, listP);
+        lv.setAdapter(lva);
     }
 
 }
